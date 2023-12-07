@@ -10,8 +10,16 @@ repositories {
     mavenCentral()
 }
 
+val ktor_version: String by project
+
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-logging:$ktor_version")
+    implementation("io.ktor:ktor-client-auth:$ktor_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
 }
 
 tasks.test {
