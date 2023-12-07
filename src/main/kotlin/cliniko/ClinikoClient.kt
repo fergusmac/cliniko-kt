@@ -1,6 +1,6 @@
 package cliniko
 
-import RateLimiter
+import cliniko.RateLimiter
 import cliniko.sections.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
