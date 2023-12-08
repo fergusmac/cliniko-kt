@@ -1,11 +1,13 @@
 plugins {
     kotlin("jvm") version "1.9.0"
     kotlin("plugin.serialization") version "1.9.20"
+    `maven-publish`
+    java
     application
 }
 
 group = "fergusm"
-version = "1.0-SNAPSHOT"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
@@ -21,6 +23,21 @@ dependencies {
     implementation("io.ktor:ktor-client-auth:$ktor_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+}
+
+publishing {
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            from(components["java"])
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+tasks.named("publishToMavenLocal").configure {
+    dependsOn("assemble")
 }
 
 tasks.test {
