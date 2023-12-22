@@ -25,8 +25,8 @@ class RateLimiter(private val limit: Int, private val interval: Duration) {
     private fun releasePermit() {
         if(semaphore.availablePermits < limit)
         {
-            semaphore.release()
             lastRelease = timeSource.markNow()
+            semaphore.release()
         }
 
         if((timeSource.markNow() - lastRelease > interval) and (semaphore.availablePermits == limit)) {
