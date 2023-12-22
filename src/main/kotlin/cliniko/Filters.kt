@@ -19,10 +19,10 @@ fun inRange(field : String, minVal : String?, maxVal : String?) : Parameters {
     return result
 }
 
-fun utcInstantInRange(field: String, minInstant: Instant?, maxInstant : Instant?) : Parameters {
+fun instantInRange(field: String, minInstant: Instant?, maxInstant : Instant?) : Parameters {
 
     return inRange(field,
-        minVal = minInstant?.toLocalDateTime(TimeZone.UTC)?.toString(),
-        maxVal = maxInstant?.toLocalDateTime(TimeZone.UTC)?.toString()
+        minVal = minInstant?.toString(),
+        maxVal = maxInstant?.toString(),
     )
 }
