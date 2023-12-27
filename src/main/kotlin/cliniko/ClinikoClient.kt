@@ -17,6 +17,7 @@ import kotlinx.serialization.json.Json
 import kotlin.math.ceil
 import kotlin.reflect.KProperty1
 import kotlin.time.Duration.Companion.minutes
+import io.ktor.http.encodeURLQueryComponent
 
 
 const val RESULTS_PER_PAGE = 100
@@ -52,9 +53,14 @@ class ClinikoClient(val baseUrl: String, apiKey: String) {
         val urlBuilder = URLBuilder(
             host = baseUrl,
             pathSegments = pathSegments,
-            parameters = params,
             protocol = URLProtocol.HTTPS
         )
+
+        params.forEach { key, values ->
+            values.forEach { value ->
+                urlBuilder.parameters.append(key, value.encodeURLQueryComponent(encodeFull = false))
+            }
+        }
 
         var response : HttpResponse? = null
 
