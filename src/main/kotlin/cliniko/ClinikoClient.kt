@@ -53,16 +53,13 @@ class ClinikoClient(val baseUrl: String, apiKey: String) {
         val urlBuilder = URLBuilder(
             host = baseUrl,
             pathSegments = pathSegments,
-            protocol = URLProtocol.HTTPS
+            protocol = URLProtocol.HTTPS,
+            parameters = params
         )
 
-        params.forEach { key, values ->
-            values.forEach { value ->
-                urlBuilder.parameters.append(key, value.encodeURLQueryComponent(encodeFull = false))
-            }
-        }
-
         var response : HttpResponse? = null
+
+        println(urlBuilder.build())
 
         rateLimiter.submitTask {
             response = client.get(urlBuilder.build()) {
@@ -73,6 +70,7 @@ class ClinikoClient(val baseUrl: String, apiKey: String) {
                 }
             }
         }
+
 
         return response!!.bodyAsText()
     }

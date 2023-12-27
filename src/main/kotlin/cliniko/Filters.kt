@@ -15,8 +15,8 @@ fun inRange(field : String, minVal : String?, maxVal : String?) : Parameters {
 
     var result = parametersOf()
 
-    if (minVal != null) result += parametersOf("q[]", "$field>=$minVal")
-    if (maxVal != null) result += parametersOf("q[]", "$field<=$maxVal")
+    if (minVal != null) result += parametersOf("q[]", "$field:>=$minVal")
+    if (maxVal != null) result += parametersOf("q[]", "$field:<=$maxVal")
 
     return result
 }
@@ -24,6 +24,7 @@ fun inRange(field : String, minVal : String?, maxVal : String?) : Parameters {
 fun instantInRange(field: String, minInstant: Instant?, maxInstant : Instant?) : Parameters {
 
     return inRange(field,
+        //cliniko will be ok if we do send the millis, but its unecessarily precise
         minVal = minInstant?.toStringNoMillis(),
         maxVal = maxInstant?.toStringNoMillis(),
     )
@@ -32,6 +33,6 @@ fun instantInRange(field: String, minInstant: Instant?, maxInstant : Instant?) :
 fun Instant.toStringNoMillis() : String {
     // we have to convert to a datetime, then a java datetime, in order to be able to use the java dateformatter class
     val dt = this.toLocalDateTime(TimeZone.UTC)
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
     return formatter.format(dt.toJavaLocalDateTime())
 }
