@@ -11,6 +11,7 @@ version = "0.1.5"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 val ktor_version: String by project
