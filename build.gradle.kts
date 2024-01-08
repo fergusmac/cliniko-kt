@@ -9,12 +9,9 @@ plugins {
 group = "fergusm"
 version = "0.1.5"
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
-
 val ktor_version: String by project
+
+apply(from = "common.gradle.kts")
 
 dependencies {
     testImplementation(kotlin("test"))
@@ -26,16 +23,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
 }
 
-publishing {
-    publications {
-        register("mavenJava", MavenPublication::class) {
-            from(components["java"])
-        }
-    }
-    repositories {
-        mavenLocal()
-    }
-}
 
 tasks.named("publishToMavenLocal").configure {
     dependsOn("assemble")
